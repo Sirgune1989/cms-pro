@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - CMS_TOKEN=${CMS_TOKEN}
+      - PORT=4000
+      - DB_PATH=/app/data/db.sqlite
+    volumes:
+      - db-data:/app/data
+      - uploads-data:/app/uploads
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
+
+  tv-screen:
+    build: ./tv-screen
+    ports:
+      - "8080:80"
+    environment:
+      - API_URL=http://backend:4000
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  db-data:
+  uploads-data:

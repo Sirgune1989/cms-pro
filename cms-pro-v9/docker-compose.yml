@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: cms-backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend/src:/app/src
+      - db-data:/app/data
+      - uploads-data:/app/uploads
+    environment:
+      - NODE_ENV=development
+      - CMS_TOKEN=${CMS_TOKEN:-dev-token-12345}
+      - PORT=4000
+      - DB_PATH=/app/data/db.sqlite
+      - FRONTEND_URL=http://localhost:3000
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: cms-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    environment:
+      - VITE_API_URL=http://localhost:4000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  tv-screen:
+    build: ./tv-screen
+    container_name: cms-tv-screen
+    ports:
+      - "8080:80"
+    environment:
+      - API_URL=http://backend:4000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  uploads-data:
+
+networks:
+  default:
+    name: cms-pro-network

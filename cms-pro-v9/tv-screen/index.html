@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfoTV</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="layout" id="layout">
+  <div class="topbar">
+    <div class="tb-brand">
+      <div id="tb-logo" class="tb-logo-placeholder">🏛️</div>
+      <div>
+        <div class="tb-name">InfoHub</div>
+        <div class="tb-sub" id="tb-sub"></div>
+      </div>
+    </div>
+    <div class="tb-divider"></div>
+    <div class="tb-weather" id="wx"><span style="color:var(--tx2);font-size:.8rem">Ładowanie pogody…</span></div>
+    <div class="tb-spacer"></div>
+    <div class="tb-datetime">
+      <div class="tb-date" id="dt">—</div>
+      <div class="tb-clock" id="clk">--:--</div>
+    </div>
+  </div>
+
+  <div class="stage" id="stage"></div>
+
+  <div class="sidebar">
+    <div class="stile scontact">
+      <h4>Kontakt</h4>
+      <div id="contact-list"></div>
+    </div>
+    <div class="stile srooms" style="flex:1">
+      <h4>Pokoje</h4>
+      <ul id="rooms-list"></ul>
+    </div>
+  </div>
+
+  <div class="ticker">
+    <div class="tlbl">NA ŻYWO</div>
+    <div class="tktrack">
+      <div class="tkins" id="tkins"></div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loading">
+  <div class="loading-spinner"></div>
+  <div>Ładowanie danych...</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
